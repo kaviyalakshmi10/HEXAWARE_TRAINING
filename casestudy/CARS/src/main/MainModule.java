@@ -66,7 +66,7 @@ public class MainModule {
                         incident.setSuspectId(scanner.nextInt());
 
                         boolean created = service.createIncident(incident);
-                        System.out.println(created ? "✅ Incident created successfully." : "❌ Failed to create incident.");
+                        System.out.println(created ? " Incident created successfully." : " Failed to create incident.");
                         break;
 
 
@@ -79,7 +79,7 @@ public class MainModule {
 
                         boolean updated = service.updateIncidentStatus(id, status);
                         if (!updated) throw new IncidentNumberNotFoundException("Incident ID " + id + " not found.");
-                        System.out.println("✅ Incident status updated.");
+                        System.out.println(" Incident status updated.");
                         break;
 
                     case 3:
@@ -119,9 +119,9 @@ public class MainModule {
 
                         Report report = service.generateIncidentReport(inc, officerId, reportDetails, reportStatus);
                         if (report != null && report.getReportId() > 0) {
-                            System.out.println("✅ Report generated successfully: " + report);
+                            System.out.println(" Report generated successfully: " + report);
                         } else {
-                            System.out.println("❌ Failed to generate report.");
+                            System.out.println(" Failed to generate report.");
                         }
                         break;
                         
@@ -130,7 +130,7 @@ public class MainModule {
                         int searchIncidentId = scanner.nextInt();
                         List<Report> reports = service.getReportsByIncidentId(searchIncidentId);
                         if (reports.isEmpty()) {
-                            System.out.println("⚠️ No reports found for Incident ID " + searchIncidentId);
+                            System.out.println(" No reports found for Incident ID " + searchIncidentId);
                         } else {
                             printReportTable(reports);
                         }
@@ -156,9 +156,9 @@ public class MainModule {
                         scanner.nextLine(); // consume newline
                         entity.Case newCase = service.createCase(caseDesc, incidentList);
                         if (newCase != null && newCase.getCaseId() > 0) {
-                            System.out.println("✅ Case created: ID = " + newCase.getCaseId());
+                            System.out.println(" Case created: ID = " + newCase.getCaseId());
                         } else {
-                            System.out.println("❌ Failed to create case.");
+                            System.out.println(" Failed to create case.");
                         }
                         break;
 
@@ -173,7 +173,7 @@ public class MainModule {
                             System.out.println("Description: " + c.getCaseDescription());
                             System.out.println("Incident IDs: " + c.getIncidentIds());
                         } else {
-                            System.out.println("⚠️ Case not found.");
+                            System.out.println(" Case not found.");
                         }
                         break;
 
@@ -190,13 +190,13 @@ public class MainModule {
                         updateCase.setCaseDescription(updatedDesc);
 
                         boolean updated1 = service.updateCaseDetails(updateCase);
-                        System.out.println(updated1 ? "✅ Case updated successfully." : "❌ Failed to update case.");
+                        System.out.println(updated1 ? " Case updated successfully." : " Failed to update case.");
                         break;
 
                     case 10: 
                         List<entity.Case> allCases = service.getAllCases();
                         if (allCases.isEmpty()) {
-                            System.out.println("⚠️ No cases found.");
+                            System.out.println("No cases found.");
                         } else {
                             System.out.printf("%-10s %-30s\n", "Case ID", "Description");
                             System.out.println("----------------------------------------------");
@@ -207,17 +207,17 @@ public class MainModule {
                         break;
 
                     case 11:
-                        System.out.println("👋 Exiting application. Goodbye!");
+                        System.out.println(" Exiting application. Goodbye!");
                         break;
 
 
                     default:
-                        System.out.println("⚠️ Invalid choice. Try again.");
+                        System.out.println("Invalid choice. Try again.");
                 }
             } catch (IncidentNumberNotFoundException e) {
-                System.out.println("❌ Error: " + e.getMessage());
+                System.out.println(" Error: " + e.getMessage());
             } catch (Exception e) {
-                System.out.println("❌ Unexpected error: " + e.getMessage());
+                System.out.println("Unexpected error: " + e.getMessage());
             }
 
         } while (choice != 11);
@@ -243,7 +243,7 @@ public class MainModule {
 
     private static void printIncidentTable(List<Incident> list) {
         if (list.isEmpty()) {
-            System.out.println("⚠️ No records found.");
+            System.out.println("No records found.");
             return;
         }
 

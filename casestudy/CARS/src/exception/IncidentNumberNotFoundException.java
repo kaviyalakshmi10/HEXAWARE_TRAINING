@@ -1,8 +1,5 @@
 package exception;
 
-/**
- * Thrown when an incident ID is not found in the database.
- */
 public class IncidentNumberNotFoundException extends Exception {
 
     /**

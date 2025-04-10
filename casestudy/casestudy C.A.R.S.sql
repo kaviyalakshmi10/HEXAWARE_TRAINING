@@ -131,5 +131,35 @@ insert into evidence (description, location_found, incident_id) values
 insert into reports (incident_id, reporting_officer, report_date, report_details, status) values
 (1, 1, '2024-02-16', 'Initial report filed, awaiting forensic analysis', 'draft'),
 (2, 2, '2024-03-06', 'Case handed over to crime branch', 'finalized');
+    
+create table cases (
+    case_id INT AUTO_INCREMENT PRIMARY KEY,
+    case_description TEXT
+);
 
+    
+create table case_incidents (
+    case_id INT,
+    incident_id INT,
+    FOREIGN KEY (case_id) REFERENCES cases(case_id) ON DELETE CASCADE,
+    FOREIGN KEY (incident_id) REFERENCES incidents(incident_id) ON DELETE CASCADE
+);
+insert into cases (case_description) VALUES
+('Serial Robbery Investigation in Bangalore East'),
+('Cyber Fraud Ring - Multi-city Operation'),
+('High-profile Kidnapping Case - VIP Victim'),
+('Narcotics Smuggling Network - South India'),
+('Internet Banking Scam - Phishing Attacks');
+
+
+INSERT INTO case_incidents (case_id, incident_id) VALUES
+(1, 1),
+(1, 2);
+
+INSERT INTO case_incidents (case_id, incident_id) VALUES
+(2, 3),
+(2,1);
+
+INSERT INTO case_incidents (case_id, incident_id) VALUES
+(3, 1);
 

@@ -220,7 +220,7 @@ public class MainModule {
                 System.out.println("❌ Unexpected error: " + e.getMessage());
             }
 
-        } while (choice != 6);
+        } while (choice != 11);
         scanner.close();
     }
     

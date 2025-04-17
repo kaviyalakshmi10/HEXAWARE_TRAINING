@@ -251,12 +251,31 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService {
         return result;
     }
 
+ @Override
     public boolean updateCaseDetails(Case updatedCase) {
-        String sql = "UPDATE cases SET case_description = ? WHERE case_id = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, updatedCase.getCaseDescription());
-            ps.setInt(2, updatedCase.getCaseId());
-            return ps.executeUpdate() > 0;
+        String updateSql = "UPDATE cases SET case_description = ? WHERE case_id = ?";
+        String insertIncidentSql = "INSERT INTO case_incidents (case_id, incident_id) VALUES (?, ?)";
+
+        try (
+            PreparedStatement updateStmt = connection.prepareStatement(updateSql);
+            PreparedStatement insertStmt = connection.prepareStatement(insertIncidentSql)
+        ) {
+            // Update case description
+            updateStmt.setString(1, updatedCase.getCaseDescription());
+            updateStmt.setInt(2, updatedCase.getCaseId());
+            int updateCount = updateStmt.executeUpdate();
+
+            // Insert new incident links if provided
+            if (updatedCase.getIncidentIds() != null && !updatedCase.getIncidentIds().isEmpty()) {
+                for (int incidentId : updatedCase.getIncidentIds()) {
+                    insertStmt.setInt(1, updatedCase.getCaseId());
+                    insertStmt.setInt(2, incidentId);
+                    insertStmt.addBatch();
+                }
+                insertStmt.executeBatch();
+            }
+
+            return updateCount > 0;
         } catch (SQLException e) {
             System.out.println("Error updating case: " + e.getMessage());
             return false;

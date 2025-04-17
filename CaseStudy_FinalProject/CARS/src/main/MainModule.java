@@ -201,7 +201,7 @@ public class MainModule {
                                 int incId = scanner.nextInt();
                                 incidentIdsToAdd.add(incId);
                             }
-                            scanner.nextLine(); // Consume newline
+                            scanner.nextLine(); 
                         }
 
                         Case updateCase = new Case();

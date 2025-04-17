@@ -179,7 +179,7 @@ public class MainModule {
                         }
                         break;
 
-                    case 9:
+                   case 9:
                         System.out.print("Enter Case ID to update: ");
                         int updateId = scanner.nextInt();
                         scanner.nextLine();
@@ -187,12 +187,30 @@ public class MainModule {
                         System.out.print("Enter new case description: ");
                         String updatedDesc = scanner.nextLine();
 
+                        System.out.print("Do you want to add incidents to this case? (yes/no): ");
+                        String addMore = scanner.nextLine().trim().toLowerCase();
+
+                        List<Integer> incidentIdsToAdd = new ArrayList<>();
+
+                        if (addMore.equals("yes")) {
+                            System.out.print("Enter number of incidents to add: ");
+                            int newCount = scanner.nextInt();
+
+                            for (int i = 0; i < newCount; i++) {
+                                System.out.print("Enter new incident ID #" + (i + 1) + ": ");
+                                int incId = scanner.nextInt();
+                                incidentIdsToAdd.add(incId);
+                            }
+                            scanner.nextLine(); // Consume newline
+                        }
+
                         Case updateCase = new Case();
                         updateCase.setCaseId(updateId);
                         updateCase.setCaseDescription(updatedDesc);
+                        updateCase.setIncidentIds(incidentIdsToAdd);
 
-                        boolean updated1 = service.updateCaseDetails(updateCase);
-                        System.out.println(updated1 ? " Case updated successfully." : " Failed to update case.");
+                        boolean updatedCaseResult = service.updateCaseDetails(updateCase);
+                        System.out.println(updatedCaseResult ? " Case updated successfully." : " Failed to update case.");
                         break;
 
                     case 10:

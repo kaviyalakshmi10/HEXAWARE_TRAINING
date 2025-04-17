@@ -260,12 +260,9 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService {
             PreparedStatement updateStmt = connection.prepareStatement(updateSql);
             PreparedStatement insertStmt = connection.prepareStatement(insertIncidentSql)
         ) {
-            // Update case description
             updateStmt.setString(1, updatedCase.getCaseDescription());
             updateStmt.setInt(2, updatedCase.getCaseId());
             int updateCount = updateStmt.executeUpdate();
-
-            // Insert new incident links if provided
             if (updatedCase.getIncidentIds() != null && !updatedCase.getIncidentIds().isEmpty()) {
                 for (int incidentId : updatedCase.getIncidentIds()) {
                     insertStmt.setInt(1, updatedCase.getCaseId());
